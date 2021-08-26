@@ -1,9 +1,10 @@
 import math
 from dataclasses import dataclass
-from typing import List
+from typing import List, Dict, Any
 
 from dataclasses_json import DataClassJsonMixin
 
+ANNOTATION_TYPE_UNKNOWN="Unknown"
 
 @dataclass
 class Location(DataClassJsonMixin):
@@ -43,7 +44,8 @@ class EulerAnglesZXY(DataClassJsonMixin):
     y: float
     z: float
 
-    def to_quaterion(self):
+    
+    def to_quaterion(self) -> List[float]:
         """
         クォータニオンを生成する。
 
@@ -74,6 +76,7 @@ class EulerAnglesZXY(DataClassJsonMixin):
         qz = (cosYaw * cosPitch * sinRoll) - (sinYaw * sinPitch * cosRoll)
         qw = (cosYaw * cosPitch * cosRoll) + (sinYaw * sinPitch * sinRoll)
         return [qw, qx, qy, qz]
+
 
     @classmethod
     def from_quaterion(cls, quaterion: List[float]) -> "EulerAnglesZXY":
@@ -134,9 +137,7 @@ class CuboidDirection(DataClassJsonMixin):
     up: Vector3
     """cuboid座標系Z軸の正の方向"""
 
-    @staticmethod
-    def from_rotation():
-        pass
+    
 
 
 @dataclass
@@ -155,3 +156,43 @@ class CuboidAnnotationDetailData(DataClassJsonMixin):
     shape: CuboidShape
     kind: str = "CUBOID"
     version: str = "2"
+
+    def to_dict(self) -> Dict[str,Any]:
+        """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
+        str_data = self.to_json()
+        return {
+            "data": str_data,
+            "_type": ANNOTATION_TYPE_UNKNOWN
+        }
+
+@dataclass
+class SegmentAnnotationDetailData(DataClassJsonMixin):
+    data_uri: str
+
+    def to_dict(self) -> Dict[str,Any]:
+        """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
+        return {
+            "data": self.data_uri,
+            "_type": ANNOTATION_TYPE_UNKNOWN
+        }
+
+
+
+def convert_annotation_deitail_data(dict_data:Dict[str,Any]) -> Any:
+    """
+    SimpleAnnotationDetailクラスのdict型であるdataプロパティを、3DPC Editor用のDataclassに変換します。
+    3DPC Editor用のDataclassに変換できない場合は、引数をそのまま返します。
+
+    Args:
+        dict_data: SimpleAnnotationDetailクラスのdict型のdataプロパティ
+
+    Returns:
+        3DPC Editor用のDataclass
+    """
+    if dict_data["_type"] != ANNOTATION_TYPE_UNKNOWN:
+        return dict_data
+    
+    if dict_data["data"].startswith("{\"kind\":\"CUBOID\""):
+        CuboidAnnotationDetailData.from_json(dict_data["data"])
+    else:
+        SegmentAnnotationDetailData(dict_data["data"])
