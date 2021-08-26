@@ -23,7 +23,7 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-# dataclasses-json="*"
+dataclasses-json="*"
 
 [tool.poetry.dev-dependencies]
 # test library
