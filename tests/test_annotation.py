@@ -14,16 +14,33 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/../")
 data_dir = Path("./tests/data")
 
 
-def test_convert_annotation_deitail_data():
-    with (data_dir / "simple_annotation.json").open() as f:
-        dict_simple_annotation = json.load(f)
+class TestAnnotation:
+    @classmethod
+    def setup_class(cls):
+        with (data_dir / "simple_annotation.json").open() as f:
+            dict_simple_annotation = json.load(f)
 
-    details = dict_simple_annotation["details"]
+        cls.details = dict_simple_annotation["details"]
 
-    result0 = convert_annotation_deitail_data(details[0]["data"])
-    print(result0)
-    assert type(result0) == SegmentAnnotationDetailData
+    def test_convert_annotation_deitail_data_with_segment(self):
+        detail = self.details[0]
+        result = convert_annotation_deitail_data(detail["data"])
+        print(result)
+        assert type(result) == SegmentAnnotationDetailData
+        print(result.dump())
+        assert result.dump() == detail["data"]
 
-    result1 = convert_annotation_deitail_data(details[1]["data"])
-    print(result1)
-    assert type(result1) == CuboidAnnotationDetailData
+    def test_convert_annotation_deitail_data_with_cuboid(self):
+        detail = self.details[1]
+        result = convert_annotation_deitail_data(detail["data"])
+        print(result)
+        assert type(result) == CuboidAnnotationDetailData
+        print(result.dump())
+        print(detail["data"])
+        assert result.dump() == detail["data"]
+
+    def test_convert_annotation_deitail_data_with_other(self):
+        detail = self.details[2]
+        result = convert_annotation_deitail_data(detail["data"])
+        print(result)
+        assert type(result) == dict

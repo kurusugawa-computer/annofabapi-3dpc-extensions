@@ -1,3 +1,4 @@
+import json
 import math
 from dataclasses import dataclass
 from typing import Any, Dict, List
@@ -156,7 +157,11 @@ class CuboidAnnotationDetailData(DataClassJsonMixin):
 
     def dump(self) -> Dict[str, Any]:
         """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
-        str_data = self.to_json()
+        tmp = self.to_dict()
+        # keyの順番を3dpc editorに合わせる
+        str_data = json.dumps(
+            {"kind": tmp["kind"], "shape": tmp["shape"], "version": tmp["version"]}, separators=(",", ":")
+        )
         return {"data": str_data, "_type": ANNOTATION_TYPE_UNKNOWN}
 
 
