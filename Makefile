@@ -1,8 +1,9 @@
+export MODULE:=annofab_3dpc
 ifndef FORMAT_FILES
-	export FORMAT_FILES:=annofab_3dpc tests
+	export FORMAT_FILES:=${MODULE} tests
 endif
 ifndef LINT_FILES
-	export LINT_FILES:=annofab_3dpc
+	export LINT_FILES:=${MODULE}
 endif
 
 .PHONY: format lint test docs publish
@@ -19,15 +20,8 @@ lint:
 
 test:
 	# 並列実行してレポートも出力する
-	poetry run pytest -n auto  --cov=kci --cov-report=html tests
+	poetry run pytest -n auto  --cov=${MODULE} --cov-report=html tests
 
 docs:
 	cd docs && poetry run make html
 
-# publish:
-# 	# public PyPIにデプロイ 
-# 	poetry publish --build
-# 	# 社内PyPIにデプロイ
-# 	# 事前に`$ poetry config repositories.kci-upload https://kurusugawa.jp/nexus3/repository/KRS-pypi/ `を実行すること
-# 	poetry publish --repository kci-upload --build
-	

@@ -28,6 +28,7 @@
         "popen",
         "pylint",
         "tzlocal",
-        "unsubscriptable"
+        "unsubscriptable",
+        "wxyz"
     ]
 }

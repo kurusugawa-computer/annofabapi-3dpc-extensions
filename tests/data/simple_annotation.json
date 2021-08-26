@@ -1,18 +1,18 @@
 {
-    "project_id": "3bc1a5e3-73e0-4b2f-b893-dd20f3de5ff9",
+    "project_id": "prj1",
     "annotation_format_version": "1.2.0",
-    "task_id": "lux_1593739803718_scale_lux_2205.csv_0",
+    "task_id": "task1",
     "task_phase": "acceptance",
     "task_phase_stage": 1,
     "task_status": "break",
-    "input_data_id": "lidar_frame_id_1593739803698_lux_2205_1000",
-    "input_data_name": "lidar_frame_id_1593739803698_lux_2205_1000.bin",
+    "input_data_id": "input1",
+    "input_data_name": "input1.bin",
     "details": [
         {
             "label": "road",
             "annotation_id": "83acff14-91b1-49b5-be71-edf3b0b9e905",
             "data": {
-                "data": "./lidar_frame_id_1593739803698_lux_2205_1000/83acff14-91b1-49b5-be71-edf3b0b9e905",
+                "data": "./input1/83acff14-91b1-49b5-be71-edf3b0b9e905",
                 "_type": "Unknown"
             },
             "attributes": {
@@ -28,6 +28,17 @@
             },
             "attributes": {
                 "tracking_id": "01F2G97ER31611C2VN2NVGGM25"
+            }
+        },
+        {
+            "label": "climatic",
+            "annotation_id": "5ac0d7d5-6738-4c4b-a69a-cd583ff458e1",
+            "data": {
+                "_type": "Classification"
+            },
+            "attributes": {
+                "temparature": "20",
+                "weather": "sunny"
             }
         }
     ],
