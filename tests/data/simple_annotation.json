@@ -1,0 +1,35 @@
+{
+    "project_id": "3bc1a5e3-73e0-4b2f-b893-dd20f3de5ff9",
+    "annotation_format_version": "1.2.0",
+    "task_id": "lux_1593739803718_scale_lux_2205.csv_0",
+    "task_phase": "acceptance",
+    "task_phase_stage": 1,
+    "task_status": "break",
+    "input_data_id": "lidar_frame_id_1593739803698_lux_2205_1000",
+    "input_data_name": "lidar_frame_id_1593739803698_lux_2205_1000.bin",
+    "details": [
+        {
+            "label": "road",
+            "annotation_id": "83acff14-91b1-49b5-be71-edf3b0b9e905",
+            "data": {
+                "data": "./lidar_frame_id_1593739803698_lux_2205_1000/83acff14-91b1-49b5-be71-edf3b0b9e905",
+                "_type": "Unknown"
+            },
+            "attributes": {
+                "ignore": true
+            }
+        },
+        {
+            "label": "car",
+            "annotation_id": "01F2G97ER31611C2VN2NVGGM25",
+            "data": {
+                "data": "{\"kind\":\"CUBOID\",\"shape\":{\"dimensions\":{\"width\":2.729832013852629,\"height\":0.287541925907135,\"depth\":2.2986403685812666},\"location\":{\"x\":-3.601640188583491,\"y\":-4.261203955653908,\"z\":0.45439663529396057},\"rotation\":{\"x\":0,\"y\":0,\"z\":3.141592653589793},\"direction\":{\"front\":{\"x\":-1,\"y\":1.2246468525851679e-16,\"z\":0},\"up\":{\"x\":0,\"y\":0,\"z\":1}}},\"version\":\"2\"}",
+                "_type": "Unknown"
+            },
+            "attributes": {
+                "tracking_id": "01F2G97ER31611C2VN2NVGGM25"
+            }
+        }
+    ],
+    "updated_datetime": "2021-08-20T23:08:13.84+09:00"
+}
