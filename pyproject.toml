@@ -22,8 +22,8 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-dataclasses-json="*"
+python = "^3.8"
+# dataclasses-json="*"
 
 [tool.poetry.dev-dependencies]
 # test library
