@@ -174,7 +174,7 @@ class SegmentAnnotationDetailData(DataClassJsonMixin):
         return {"data": self.data_uri, "_type": ANNOTATION_TYPE_UNKNOWN}
 
 
-def convert_annotation_deitail_data(dict_data: Dict[str, Any]) -> Any:
+def convert_annotation_detail_data(dict_data: Dict[str, Any]) -> Any:
     """
     SimpleAnnotationDetailクラスのdict型であるdataプロパティを、3DPC Editor用のDataclassに変換します。
     3DPC Editor用のDataclassに変換できない場合は、引数をそのまま返します。
