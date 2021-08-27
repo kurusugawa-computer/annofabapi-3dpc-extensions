@@ -2,6 +2,9 @@ import json
 import os
 from pathlib import Path
 
+import annofabapi
+from annofabapi.parser import SimpleAnnotationDirParser
+
 from annofab_3dpc.annotation import (
     CuboidAnnotationDetailData,
     SegmentAnnotationDetailData,
@@ -44,3 +47,11 @@ class TestAnnotation:
         result = convert_annotation_detail_data(detail["data"])
         print(result)
         assert type(result) == dict
+
+
+def test_convert_annotation_detail_data():
+    parser = SimpleAnnotationDirParser(data_dir / "simple_annotation.json")
+    result = parser.parse(convert_annotation_detail_data)
+    assert type(result.details[0].data) == SegmentAnnotationDetailData
+    assert type(result.details[1].data) == CuboidAnnotationDetailData
+    assert type(result.details[2].data) == dict
