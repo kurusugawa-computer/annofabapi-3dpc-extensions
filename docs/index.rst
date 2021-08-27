@@ -1,11 +1,16 @@
-kurusugawa-cli documentation
+annofab-3dpc-extension documentation
 ==================================================
 
 --------------------------------------------------
 Table of Contents
 --------------------------------------------------
 
-test
+.. toctree::
+   :maxdepth: 2
+
+   user_guide
+   api_reference/index
+
 
 --------------------------------------------------
 Indices and tables
