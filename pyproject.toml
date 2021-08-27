@@ -26,6 +26,9 @@ python = "^3.8"
 dataclasses-json="*"
 
 [tool.poetry.dev-dependencies]
+# テストコードで利用するため
+annofabapi = ">=0.47.0"
+
 # test library
 pytest = "*"
 pytest-xdist = "*"
