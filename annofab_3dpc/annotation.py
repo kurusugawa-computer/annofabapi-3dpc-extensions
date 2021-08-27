@@ -187,7 +187,11 @@ def convert_annotation_detail_data(dict_data: Dict[str, Any]) -> Any:
     """
     if dict_data["_type"] != ANNOTATION_TYPE_UNKNOWN:
         return dict_data
-    if dict_data["data"].startswith('{"kind":"CUBOID"'):
-        return CuboidAnnotationDetailData.from_json(dict_data["data"])
-    else:
+    try:
+        tmp = json.loads(dict_data["data"])
+        if isinstance(tmp, dict) and tmp.get("kind") == "CUBOID":
+            return CuboidAnnotationDetailData.from_dict(tmp)
+        else:
+            return dict_data
+    except json.JSONDecodeError:
         return SegmentAnnotationDetailData(dict_data["data"])
