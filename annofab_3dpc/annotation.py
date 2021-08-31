@@ -226,9 +226,10 @@ def convert_annotation_detail_data(dict_data: Dict[str, Any]) -> Any:
             version = tmp.get("version")
             if version == "2":
                 return CuboidAnnotationDetailDataV2.from_dict(tmp)
-            elif version == "1":
+            elif version is None or version == "1":
                 return CuboidAnnotationDetailDataV1.from_dict(tmp)
             else:
+                # versionが"3"のときなど
                 raise CuboidAnnotationDecodeError(f"version='{version}'のCuboidAnnotationはサポート対象外です。")
         else:
             return dict_data

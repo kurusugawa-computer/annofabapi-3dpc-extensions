@@ -1,0 +1,24 @@
+{
+    "project_id": "prj1",
+    "annotation_format_version": "1.2.0",
+    "task_id": "task1",
+    "task_phase": "acceptance",
+    "task_phase_stage": 1,
+    "task_status": "break",
+    "input_data_id": "input1",
+    "input_data_name": "input1.bin",
+    "details": [
+        {
+            "label": "car",
+            "annotation_id": "01F2G97ER31611C2VN2NVGGM25",
+            "data": {
+                "data": "{\"kind\":\"CUBOID\",\"shape\":{\"dimensions\":{\"width\":2.729832013852629,\"height\":0.287541925907135,\"depth\":2.2986403685812666},\"location\":{\"x\":-3.601640188583491,\"y\":-4.261203955653908,\"z\":0.45439663529396057},\"rotation\":{\"x\":0,\"y\":0,\"z\":3.141592653589793},\"direction\":{\"front\":{\"x\":-1,\"y\":1.2246468525851679e-16,\"z\":0},\"up\":{\"x\":0,\"y\":0,\"z\":1}}},\"version\":\"3\"}",
+                "_type": "Unknown"
+            },
+            "attributes": {
+                "tracking_id": "01F2G97ER31611C2VN2NVGGM25"
+            }
+        }
+    ],
+    "updated_datetime": "2021-08-20T23:08:13.84+09:00"
+}

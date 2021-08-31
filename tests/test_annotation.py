@@ -7,6 +7,8 @@ import pytest
 from annofabapi.parser import SimpleAnnotationDirParser
 
 from annofab_3dpc.annotation import (
+    CuboidAnnotationDecodeError,
+    CuboidAnnotationDetailDataV1,
     CuboidAnnotationDetailDataV2,
     EulerAnglesZXY,
     Location,
@@ -63,10 +65,24 @@ class TestAnnotation:
 
         assert json.loads(result.dump()["data"]) == json.loads(detail["data"]["data"])
 
-    def test_convert_annotation_detail_data_with_other(self):
+    def test_convert_annotation_detail_data_with_cuboid_v1(self):
         detail = self.details[2]
         result = convert_annotation_detail_data(detail["data"])
+        print(result)
+        assert type(result) == CuboidAnnotationDetailDataV1
+
+    def test_convert_annotation_detail_data_with_other(self):
+        detail = self.details[3]
+        result = convert_annotation_detail_data(detail["data"])
         assert type(result) == dict
+
+    def test_raise_CuboidAnnotationDecodEerror(self):
+        with (data_dir / "invalid_simple_annotation.json").open() as f:
+            dict_simple_annotation = json.load(f)
+
+        detail = dict_simple_annotation["details"][0]
+        with pytest.raises(CuboidAnnotationDecodeError):
+            convert_annotation_detail_data(detail["data"])
 
 
 def test_convert_annotation_detail_data():
@@ -74,4 +90,5 @@ def test_convert_annotation_detail_data():
     result = parser.parse(convert_annotation_detail_data)
     assert type(result.details[0].data) == SegmentAnnotationDetailData
     assert type(result.details[1].data) == CuboidAnnotationDetailDataV2
-    assert type(result.details[2].data) == dict
+    assert type(result.details[2].data) == CuboidAnnotationDetailDataV1
+    assert type(result.details[3].data) == dict
