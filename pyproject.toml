@@ -49,6 +49,7 @@ sphinx = "*"
 docutils = "*"
 # pandasのdocumentationページに近いレイアウトにするためのパッケージ
 pydata-sphinx-theme = "*"
+ipython = "*"
 
 
 [tool.black]

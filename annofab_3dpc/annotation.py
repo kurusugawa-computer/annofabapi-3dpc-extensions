@@ -1,11 +1,15 @@
 import json
 import math
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 from dataclasses_json import DataClassJsonMixin
 
 ANNOTATION_TYPE_UNKNOWN = "Unknown"
+
+
+class CuboidAnnotationDecodeError(ValueError):
+    pass
 
 
 @dataclass
@@ -139,7 +143,7 @@ class CuboidDirection(DataClassJsonMixin):
 
 
 @dataclass
-class CuboidShape(DataClassJsonMixin):
+class CuboidShapeV2(DataClassJsonMixin):
     dimensions: Size
     location: Location
     """cuboidの中心位置"""
@@ -150,18 +154,14 @@ class CuboidShape(DataClassJsonMixin):
 
 
 @dataclass
-class CuboidAnnotationDetailData(DataClassJsonMixin):
-    shape: CuboidShape
+class CuboidAnnotationDetailDataV2(DataClassJsonMixin):
+    shape: CuboidShapeV2
     kind: str = "CUBOID"
     version: str = "2"
 
     def dump(self) -> Dict[str, Any]:
         """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
-        tmp = self.to_dict()
-        # keyの順番を3dpc editorに合わせる
-        str_data = json.dumps(
-            {"kind": tmp["kind"], "shape": tmp["shape"], "version": tmp["version"]}, separators=(",", ":")
-        )
+        str_data = json.dumps(self.to_dict(), separators=(",", ":"))
         return {"data": str_data, "_type": ANNOTATION_TYPE_UNKNOWN}
 
 
@@ -172,6 +172,39 @@ class SegmentAnnotationDetailData(DataClassJsonMixin):
     def dump(self) -> Dict[str, Any]:
         """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
         return {"data": self.data_uri, "_type": ANNOTATION_TYPE_UNKNOWN}
+
+
+@dataclass
+class SizeV1(DataClassJsonMixin):
+    width: float
+    """cuboid座標系のX軸方向の長さ"""
+    height: float
+    """cuboid座標系のY軸方向の長さ"""
+    depth: float
+    """cuboid座標系のZ軸方向の長さ"""
+
+
+@dataclass
+class CuboidShapeV1(DataClassJsonMixin):
+    dimensions: SizeV1
+    location: Location
+    """cuboidの中心位置"""
+    rotation: EulerAnglesZXY
+    """cuboidの回転"""
+    direction: Optional[Vector3] = None
+    """[1, 0, 0]のベクトルを、rotationによって回転させた結果のベクトル"""
+
+
+@dataclass
+class CuboidAnnotationDetailDataV1(DataClassJsonMixin):
+    shape: CuboidShapeV1
+    kind: str = "CUBOID"
+    version: str = "1"
+
+    def dump(self) -> Dict[str, Any]:
+        """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
+        str_data = json.dumps(self.to_dict(), separators=(",", ":"))
+        return {"data": str_data, "_type": ANNOTATION_TYPE_UNKNOWN}
 
 
 def convert_annotation_detail_data(dict_data: Dict[str, Any]) -> Any:
@@ -190,7 +223,13 @@ def convert_annotation_detail_data(dict_data: Dict[str, Any]) -> Any:
     try:
         tmp = json.loads(dict_data["data"])
         if isinstance(tmp, dict) and tmp.get("kind") == "CUBOID":
-            return CuboidAnnotationDetailData.from_dict(tmp)
+            version = tmp.get("version")
+            if version == "2":
+                return CuboidAnnotationDetailDataV2.from_dict(tmp)
+            elif version == "1":
+                return CuboidAnnotationDetailDataV1.from_dict(tmp)
+            else:
+                raise CuboidAnnotationDecodeError(f"version='{version}'のCuboidAnnotationはサポート対象外です。")
         else:
             return dict_data
     except json.JSONDecodeError:

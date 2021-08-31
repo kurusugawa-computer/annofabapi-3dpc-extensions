@@ -6,7 +6,8 @@ import annofabapi
 from annofabapi.parser import SimpleAnnotationDirParser
 
 from annofab_3dpc.annotation import (
-    CuboidAnnotationDetailData,
+    CuboidAnnotationDetailDataV2,
+    Location,
     SegmentAnnotationDetailData,
     convert_annotation_detail_data,
 )
@@ -15,6 +16,18 @@ from annofab_3dpc.annotation import (
 os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/../")
 
 data_dir = Path("./tests/data")
+
+
+class TestLocation:
+    def test_add(self):
+        l1 = Location(1, 2, 3)
+        l2 = Location(2, 3, 4)
+        assert l1 + l2 == Location(3, 5, 7)
+
+    def test_sub(self):
+        l1 = Location(1, 2, 3)
+        l2 = Location(5, 5, 5)
+        assert l2 - l1 == Location(4, 3, 2)
 
 
 class TestAnnotation:
@@ -37,10 +50,10 @@ class TestAnnotation:
         detail = self.details[1]
         result = convert_annotation_detail_data(detail["data"])
         print(result)
-        assert type(result) == CuboidAnnotationDetailData
+        assert type(result) == CuboidAnnotationDetailDataV2
         print(result.dump())
         print(detail["data"])
-        assert result.dump() == detail["data"]
+        assert json.loads(result.dump()) == json.loads(detail["data"])
 
     def test_convert_annotation_detail_data_with_other(self):
         detail = self.details[2]
@@ -53,5 +66,5 @@ def test_convert_annotation_detail_data():
     parser = SimpleAnnotationDirParser(data_dir / "simple_annotation.json")
     result = parser.parse(convert_annotation_detail_data)
     assert type(result.details[0].data) == SegmentAnnotationDetailData
-    assert type(result.details[1].data) == CuboidAnnotationDetailData
+    assert type(result.details[1].data) == CuboidAnnotationDetailDataV2
     assert type(result.details[2].data) == dict
