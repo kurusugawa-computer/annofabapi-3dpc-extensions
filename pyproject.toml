@@ -50,6 +50,8 @@ docutils = "*"
 # pandasのdocumentationページに近いレイアウトにするためのパッケージ
 pydata-sphinx-theme = "*"
 
+typed-ast = "*"
+
 
 [tool.black]
 line-length = 120
