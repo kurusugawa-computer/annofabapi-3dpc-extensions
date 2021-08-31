@@ -56,7 +56,6 @@ class EulerAnglesZXY(DataClassJsonMixin):
 
         以下のサイトから移植
         https://github.com/BabylonJS/Babylon.js/blob/40ded9ccf1e1bd8ac9cdf3a26909d3e12bc60ab8/src/Maths/math.vector.ts#L3259-L3275
-        https://github.com/BabylonJS/Babylon.js/blob/40ded9ccf1e1bd8ac9cdf3a26909d3e12bc60ab8/src/Maths/math.vector.ts#L3198-L3201
 
         Returns:
             クォータニオン[w,x,y,z]
