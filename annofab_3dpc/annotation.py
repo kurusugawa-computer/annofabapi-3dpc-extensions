@@ -50,7 +50,7 @@ class EulerAnglesZXY(DataClassJsonMixin):
     y: float
     z: float
 
-    def to_quaterion(self) -> List[float]:
+    def to_quaternion(self) -> List[float]:
         """
         クォータニオンを生成する。
 
@@ -83,18 +83,18 @@ class EulerAnglesZXY(DataClassJsonMixin):
         return [qw, qx, qy, qz]
 
     @classmethod
-    def from_quaterion(cls, quaterion: List[float]) -> "EulerAnglesZXY":
+    def from_quaternion(cls, quaternion: List[float]) -> "EulerAnglesZXY":
         """
-        quaterion から生成する。以下のコードを移植した。
+        quaternion から生成する。以下のコードを移植した。
         https://github.com/BabylonJS/Babylon.js/blob/40ded9ccf1e1bd8ac9cdf3a26909d3e12bc60ab8/src/Maths/math.vector.ts#L2970-L3001
 
         Args:
-            quaterion: wxyzの1次元配列
+            quaternion: wxyzの1次元配列
         """
-        qw = quaterion[0]
-        qx = quaterion[1]
-        qy = quaterion[2]
-        qz = quaterion[3]
+        qw = quaternion[0]
+        qx = quaternion[1]
+        qy = quaternion[2]
+        qz = quaternion[3]
 
         sqx = qx * qx
         sqy = qy * qy

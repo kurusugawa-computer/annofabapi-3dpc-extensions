@@ -1,12 +1,14 @@
 import json
+import math
 import os
 from pathlib import Path
 
-import annofabapi
+import pytest
 from annofabapi.parser import SimpleAnnotationDirParser
 
 from annofab_3dpc.annotation import (
     CuboidAnnotationDetailDataV2,
+    EulerAnglesZXY,
     Location,
     SegmentAnnotationDetailData,
     convert_annotation_detail_data,
@@ -30,6 +32,16 @@ class TestLocation:
         assert l2 - l1 == Location(4, 3, 2)
 
 
+class TestEulerAnglesZXY:
+    def test_main(self):
+        euler_angles = EulerAnglesZXY(0, math.pi / 2, 0)
+        quaternion = euler_angles.to_quaternion()
+        actual = EulerAnglesZXY.from_quaternion(quaternion)
+        assert actual.x == pytest.approx(euler_angles.x)
+        assert actual.y == pytest.approx(euler_angles.y)
+        assert actual.z == pytest.approx(euler_angles.z)
+
+
 class TestAnnotation:
     @classmethod
     def setup_class(cls):
@@ -41,24 +53,19 @@ class TestAnnotation:
     def test_convert_annotation_detail_data_with_segment(self):
         detail = self.details[0]
         result = convert_annotation_detail_data(detail["data"])
-        print(result)
         assert type(result) == SegmentAnnotationDetailData
-        print(result.dump())
         assert result.dump() == detail["data"]
 
     def test_convert_annotation_detail_data_with_cuboid(self):
         detail = self.details[1]
         result = convert_annotation_detail_data(detail["data"])
-        print(result)
         assert type(result) == CuboidAnnotationDetailDataV2
-        print(result.dump())
-        print(detail["data"])
-        assert json.loads(result.dump()) == json.loads(detail["data"])
+
+        assert json.loads(result.dump()["data"]) == json.loads(detail["data"]["data"])
 
     def test_convert_annotation_detail_data_with_other(self):
         detail = self.details[2]
         result = convert_annotation_detail_data(detail["data"])
-        print(result)
         assert type(result) == dict
 
 
