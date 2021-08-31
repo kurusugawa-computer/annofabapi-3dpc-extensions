@@ -1,0 +1,35 @@
+{
+    "project_id": "prj1",
+    "annotation_format_version": "1.2.0",
+    "task_id": "task1",
+    "task_phase": "annotation",
+    "task_phase_stage": 1,
+    "task_status": "break",
+    "input_data_id": "input1",
+    "input_data_name": "input1.bin",
+    "details": [
+        {
+            "label": "road",
+            "annotation_id": "7ba51c15-f07a-4e29-8584-a4eaf3a6812a",
+            "data": {
+                "data": "./input1/7ba51c15-f07a-4e29-8584-a4eaf3a6812a",
+                "_type": "Unknown"
+            },
+            "attributes": {
+                "ignore": true
+            }
+        },
+        {
+            "label": "car",
+            "annotation_id": "01F2G998A0T4DMJTQ89H0NF1G5",
+            "data": {
+                "data": "{\"kind\":\"CUBOID\",\"shape\":{\"dimensions\":{\"width\":6.853874863204751,\"height\":0.2929844409227371,\"depth\":4.092537841193188},\"location\":{\"x\":-11.896872014598989,\"y\":-3.0571381239812996,\"z\":0.3601047024130821},\"rotation\":{\"x\":0,\"y\":0,\"z\":0},\"direction\":{\"front\":{\"x\":1,\"y\":0,\"z\":0},\"up\":{\"x\":0,\"y\":0,\"z\":1}}},\"version\":\"2\"}",
+                "_type": "Unknown"
+            },
+            "attributes": {
+                "tracking_id": "123456789"
+            }
+        }
+    ],
+    "updated_datetime": "2021-08-25T18:13:37.032+09:00"
+}
