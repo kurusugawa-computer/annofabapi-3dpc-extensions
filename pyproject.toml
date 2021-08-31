@@ -22,7 +22,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 dataclasses-json="*"
 
 [tool.poetry.dev-dependencies]
@@ -37,7 +37,7 @@ pytest-cov = "*"
 # format library
 isort = "*" # import文をsortするために利用する
 autoflake = "*" # 未使用のimport文を削除するために利用する
-black = {version = "^21.7b0", allow-prereleases = true} # blackはベータ版なのでこの書き方をしている
+black = {version = "^21.8b0", allow-prereleases = true} # blackはベータ版なのでこの書き方をしている
 
 # lint library
 flake8 = "*"
@@ -49,7 +49,6 @@ sphinx = "*"
 docutils = "*"
 # pandasのdocumentationページに近いレイアウトにするためのパッケージ
 pydata-sphinx-theme = "*"
-ipython = "*"
 
 
 [tool.black]

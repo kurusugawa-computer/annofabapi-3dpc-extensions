@@ -4,10 +4,9 @@ disable =
 # https://black.readthedocs.io/en/stable/guides/using_black_with_other_tools.html?highlight=flake8#pylint
     bad-whitespace, # C0326
     bad-continuation, # C0330
-# ===== 川松が追加した設定（要見直し） =====
+
     logging-fstring-interpolation,
     protected-access,
-# ===== 以下、秦さんからもらった設定（要見直し） =====    
 # ===== May not modify =====
     fixme, # TODO remains
     line-too-long, # [flake8]
