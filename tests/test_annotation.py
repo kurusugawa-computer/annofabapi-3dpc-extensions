@@ -13,6 +13,7 @@ from annofab_3dpc.annotation import (
     EulerAnglesZXY,
     Location,
     SegmentAnnotationDetailData,
+    SegmentData,
     convert_annotation_detail_data,
 )
 
@@ -83,6 +84,20 @@ class TestAnnotation:
         detail = dict_simple_annotation["details"][0]
         with pytest.raises(CuboidAnnotationDecodeError):
             convert_annotation_detail_data(detail["data"])
+
+
+class TestSegmentaData:
+    def test_main(self):
+        parser = SimpleAnnotationDirParser(data_dir / "task1/input1.json")
+        simple_annotation = parser.parse(convert_annotation_detail_data)
+
+        segment_detail = simple_annotation.details[0]
+
+        with parser.open_outer_file(Path(segment_detail.data.data_uri).name) as f:
+            dict_segmenta_data = json.load(f)
+            segment_data = SegmentData.from_dict(dict_segmenta_data)
+            assert type(segment_data) == SegmentData
+            assert len(segment_data.points) > 0
 
 
 def test_convert_annotation_detail_data():

@@ -56,7 +56,6 @@ class EulerAnglesZXY(DataClassJsonMixin):
 
         以下のサイトから移植
         https://github.com/BabylonJS/Babylon.js/blob/40ded9ccf1e1bd8ac9cdf3a26909d3e12bc60ab8/src/Maths/math.vector.ts#L3259-L3275
-        https://github.com/BabylonJS/Babylon.js/blob/40ded9ccf1e1bd8ac9cdf3a26909d3e12bc60ab8/src/Maths/math.vector.ts#L3198-L3201
 
         Returns:
             クォータニオン[w,x,y,z]
@@ -166,8 +165,17 @@ class CuboidAnnotationDetailDataV2(DataClassJsonMixin):
 
 
 @dataclass
+class SegmentData(DataClassJsonMixin):
+    points: List[int]
+    """セグメントに含まれる点の集合。数値はアノテーション対象の点群の、0-originでのindex"""
+    kind: str = "SEGMENT"
+    version: str = "1"
+
+
+@dataclass
 class SegmentAnnotationDetailData(DataClassJsonMixin):
     data_uri: str
+    """セグメント情報が格納されたファイルのパス"""
 
     def dump(self) -> Dict[str, Any]:
         """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
