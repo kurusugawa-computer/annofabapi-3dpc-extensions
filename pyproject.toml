@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "annofabapi-3dpc-extensions"
-version = "0.1.0"
+version = "0.1.1"
 description = "annofabapiの3DPC Editor用の拡張機能です。"
 authors = ["yuji38kwmt"]
 packages = [
