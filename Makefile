@@ -25,3 +25,5 @@ test:
 docs:
 	cd docs && poetry run make html
 
+publish:
+	poetry publish --build
