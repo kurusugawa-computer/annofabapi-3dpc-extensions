@@ -24,7 +24,6 @@
     "python.formatting.provider": "black",
     "python.linting.enabled": true,
     "python.linting.lintOnSave": true,
-    "python.sortImports.path": "${workspaceRoot}/.venv/bin/isort",
     "python.linting.pylintEnabled": true,
     "python.linting.pylintPath": ".venv/bin/pylint",
     "python.linting.pylintArgs": [
