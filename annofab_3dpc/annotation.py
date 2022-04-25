@@ -140,6 +140,58 @@ class CuboidDirection(DataClassJsonMixin):
     up: Vector3
     """cuboid座標系Z軸の正の方向"""
 
+    @classmethod
+    def from_euler_angles(cls, euler_angles: EulerAnglesZXY) -> "CuboidDirection":
+        """
+        オイラー角から生成する。
+
+        Args:
+            euler_angles: z-x-y系のオイラー角
+        """
+        # 直接計算するのでなく、クォータニオンを介して計算するようにした
+        return cls.from_quaternion(euler_angles.to_quaternion())
+
+    @classmethod
+    def from_quaternion(cls, quaternion: List[float]) -> "CuboidDirection":
+        """
+        quaternion から生成する。
+
+        Notes:
+            以下のコードを移植した。
+            https://github.com/BabylonJS/Babylon.js/blob/40ded9ccf1e1bd8ac9cdf3a26909d3e12bc60ab8/src/Maths/math.vector.ts#L5356-L5389
+
+        Args:
+            quaternion: wxyzの1次元配列
+        """
+        w, x, y, z = *quaternion
+        xx = x * x
+        yy = y * y
+        zz = z * z
+        xy = x * y
+        zw = z * w
+        zx = z * x
+        yw = y * w
+        yz = y * z
+        xw = x * w
+
+        matrix = [
+            [1.0 - (2.0 * (yy + zz)), 2.0 * (xy + zw), 2.0 * (zx - yw)],
+            [
+                2.0 * (xy - zw),
+                1.0 - (2.0 * (zz + xx)),
+                2.0 * (yz + xw),
+            ],
+            [
+                2.0 * (zx + yw),
+                2.0 * (yz - xw),
+                1.0 - (2.0 * (yy + xx)),
+            ],
+        ]
+
+        front = [matrix[0][0], matrix[1][0], matrix[2][0]]
+        up = [matrix[0][2], matrix[1][2], matrix[2][2]]
+        return cls(front=front, up=up)
+
 
 @dataclass
 class CuboidShapeV2(DataClassJsonMixin):
