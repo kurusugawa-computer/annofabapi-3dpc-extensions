@@ -1,8 +1,9 @@
 import json
 import math
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Sequence, Union
 
+import numpy
 from dataclasses_json import DataClassJsonMixin
 
 ANNOTATION_TYPE_UNKNOWN = "Unknown"
@@ -40,15 +41,66 @@ class Vector3(DataClassJsonMixin):
     z: float
 
 
+class _Quaternion:
+    """
+    クォータニオンを表すクラス。
+    回転行列を算出するために、クラスを作った。
+
+    Notes:
+        以下のコードを流用した。
+        https://github.com/KieranWynn/pyquaternion/blob/99025c17bab1c55265d61add13375433b35251af/pyquaternion/quaternion.py#L138
+    """
+
+    def __init__(self, array: Union[Sequence[float], numpy.ndarray]):
+        self.q = numpy.array(array)
+
+    def _q_matrix(self):
+        """Matrix representation of quaternion for multiplication purposes."""
+        return numpy.array(
+            [
+                [self.q[0], -self.q[1], -self.q[2], -self.q[3]],
+                [self.q[1], self.q[0], -self.q[3], self.q[2]],
+                [self.q[2], self.q[3], self.q[0], -self.q[1]],
+                [self.q[3], -self.q[2], self.q[1], self.q[0]],
+            ]
+        )
+
+    def _q_bar_matrix(self):
+        """Matrix representation of quaternion for multiplication purposes."""
+        return numpy.array(
+            [
+                [self.q[0], -self.q[1], -self.q[2], -self.q[3]],
+                [self.q[1], self.q[0], self.q[3], -self.q[2]],
+                [self.q[2], -self.q[3], self.q[0], self.q[1]],
+                [self.q[3], self.q[2], -self.q[1], self.q[0]],
+            ]
+        )
+
+    @property
+    def rotation_matrix(self):
+        """Get the 3x3 rotation matrix equivalent of the quaternion rotation.
+        Returns:
+            A 3x3 orthogonal rotation matrix as a 3x3 Numpy array
+        Note:
+            This feature only makes sense when referring to a unit quaternion. Calling this method will implicitly normalise the Quaternion object to a unit quaternion if it is not already one.  # noqa: E501
+        """
+        product_matrix = numpy.dot(self._q_matrix(), self._q_bar_matrix().conj().transpose())
+        return product_matrix[1:][:, 1:]
+
+
 @dataclass
 class EulerAnglesZXY(DataClassJsonMixin):
     """
-    z-x-y系のオイラー角。単位はラジアン。
+    z-x-y系のオイラー角（右手系）。
+    単位はラジアン。
     """
 
     x: float
+    """X軸周りの回転角度[ラジアン]"""
     y: float
+    """Y軸周りの回転角度[ラジアン]"""
     z: float
+    """Z軸周りの回転角度[ラジアン]"""
 
     def to_quaternion(self) -> List[float]:
         """
@@ -82,7 +134,7 @@ class EulerAnglesZXY(DataClassJsonMixin):
         return [qw, qx, qy, qz]
 
     @classmethod
-    def from_quaternion(cls, quaternion: List[float]) -> "EulerAnglesZXY":
+    def from_quaternion(cls, quaternion: Union[Sequence[float], numpy.ndarray]) -> "EulerAnglesZXY":
         """
         quaternion から生成する。以下のコードを移植した。
         https://github.com/BabylonJS/Babylon.js/blob/40ded9ccf1e1bd8ac9cdf3a26909d3e12bc60ab8/src/Maths/math.vector.ts#L2970-L3001
@@ -152,7 +204,7 @@ class CuboidDirection(DataClassJsonMixin):
         return cls.from_quaternion(euler_angles.to_quaternion())
 
     @classmethod
-    def from_quaternion(cls, quaternion: List[float]) -> "CuboidDirection":
+    def from_quaternion(cls, quaternion: Union[Sequence[float], numpy.ndarray]) -> "CuboidDirection":
         """
         quaternion から生成する。
 
@@ -163,39 +215,17 @@ class CuboidDirection(DataClassJsonMixin):
         Args:
             quaternion: wxyzの1次元配列
         """
-        w, x, y, z = *quaternion
-        xx = x * x
-        yy = y * y
-        zz = z * z
-        xy = x * y
-        zw = z * w
-        zx = z * x
-        yw = y * w
-        yz = y * z
-        xw = x * w
 
-        matrix = [
-            [1.0 - (2.0 * (yy + zz)), 2.0 * (xy + zw), 2.0 * (zx - yw)],
-            [
-                2.0 * (xy - zw),
-                1.0 - (2.0 * (zz + xx)),
-                2.0 * (yz + xw),
-            ],
-            [
-                2.0 * (zx + yw),
-                2.0 * (yz - xw),
-                1.0 - (2.0 * (yy + xx)),
-            ],
-        ]
-
-        front = [matrix[0][0], matrix[1][0], matrix[2][0]]
-        up = [matrix[0][2], matrix[1][2], matrix[2][2]]
-        return cls(front=front, up=up)
+        matrix = _Quaternion(quaternion).rotation_matrix
+        front = matrix @ numpy.array([1, 0, 0])
+        up = matrix @ numpy.array([0, 0, 1])
+        return cls(front=Vector3(front[0], front[1], front[2]), up=Vector3(up[0], up[1], up[2]))
 
 
 @dataclass
 class CuboidShapeV2(DataClassJsonMixin):
     dimensions: Size
+    """cuboidのサイズ"""
     location: Location
     """cuboidの中心位置"""
     rotation: EulerAnglesZXY
@@ -247,6 +277,7 @@ class SizeV1(DataClassJsonMixin):
 @dataclass
 class CuboidShapeV1(DataClassJsonMixin):
     dimensions: SizeV1
+    """cuboidのサイズ"""
     location: Location
     """cuboidの中心位置"""
     rotation: EulerAnglesZXY
