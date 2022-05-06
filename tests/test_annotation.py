@@ -10,6 +10,7 @@ from annofab_3dpc.annotation import (
     CuboidAnnotationDecodeError,
     CuboidAnnotationDetailDataV1,
     CuboidAnnotationDetailDataV2,
+    CuboidDirection,
     EulerAnglesZXY,
     Location,
     SegmentAnnotationDetailData,
@@ -33,6 +34,48 @@ class TestLocation:
         l1 = Location(1, 2, 3)
         l2 = Location(5, 5, 5)
         assert l2 - l1 == Location(4, 3, 2)
+
+
+class TestCuboidDirection:
+    def test_from_euler_angles(self):
+        actual0 = CuboidDirection.from_euler_angles(EulerAnglesZXY(0, 0, 0))
+        assert actual0.front.x == pytest.approx(1)
+        assert actual0.front.y == pytest.approx(0)
+        assert actual0.front.z == pytest.approx(0)
+        assert actual0.up.x == pytest.approx(0)
+        assert actual0.up.y == pytest.approx(0)
+        assert actual0.up.z == pytest.approx(1)
+
+        actual1 = CuboidDirection.from_euler_angles(
+            EulerAnglesZXY(
+                0,
+                0,
+                math.pi / 4,
+            )
+        )
+        assert actual1.front.x == pytest.approx(math.sqrt(2) / 2)
+        assert actual1.front.y == pytest.approx(math.sqrt(2) / 2)
+        assert actual1.front.z == pytest.approx(0)
+        assert actual1.up.x == pytest.approx(0)
+        assert actual1.up.y == pytest.approx(0)
+        assert actual1.up.z == pytest.approx(1)
+
+        actual2 = CuboidDirection.from_euler_angles(EulerAnglesZXY(math.pi / 2, 0, 0))
+        assert actual2.front.x == pytest.approx(1)
+        assert actual2.front.y == pytest.approx(0)
+        assert actual2.front.z == pytest.approx(0)
+        assert actual2.up.x == pytest.approx(0)
+        assert actual2.up.y == pytest.approx(-1)
+        assert actual2.up.z == pytest.approx(0)
+
+    def test_from_quaternion(self):
+        actual0 = CuboidDirection.from_quaternion([1, 0, 0, 0])
+        assert actual0.front.x == pytest.approx(1)
+        assert actual0.front.y == pytest.approx(0)
+        assert actual0.front.z == pytest.approx(0)
+        assert actual0.up.x == pytest.approx(0)
+        assert actual0.up.y == pytest.approx(0)
+        assert actual0.up.z == pytest.approx(1)
 
 
 class TestEulerAnglesZXY:

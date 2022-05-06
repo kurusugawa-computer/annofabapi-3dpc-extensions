@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "annofabapi-3dpc-extensions"
-version = "0.1.1"
+version = "0.2.0"
 description = "annofabapiの3DPC Editor用の拡張機能です。"
 authors = ["yuji38kwmt"]
 packages = [
@@ -24,6 +24,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.7"
 dataclasses-json="*"
+numpy = "*"
 
 [tool.poetry.dev-dependencies]
 # テストコードで利用するため
@@ -37,7 +38,7 @@ pytest-cov = "*"
 # format library
 isort = "*" # import文をsortするために利用する
 autoflake = "*" # 未使用のimport文を削除するために利用する
-black = {version = "^21.8b0", allow-prereleases = true} # blackはベータ版なのでこの書き方をしている
+black = "*"
 
 # lint library
 flake8 = "*"
