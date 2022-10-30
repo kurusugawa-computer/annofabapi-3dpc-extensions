@@ -67,5 +67,7 @@ with parser.open_outer_file(Path(segment_annotation_data.data_uri).name) as f:
     segment_data = SegmentData.from_dict(dict_segmenta_data)
     assert type(segment_data) == SegmentData
     assert len(segment_data.points) > 0
+    print(segment_data.points)
+    # => [130439, 130442, ... ]
 
 ```
