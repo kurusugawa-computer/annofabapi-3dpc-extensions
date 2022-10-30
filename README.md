@@ -6,7 +6,7 @@
 
 
 
-[annofabapi](https://github.com/kurusugawa-computer/annofab-api-python-client)の3DPC（3D Point Cloud） Editor用の拡張機能です。
+[annofabapi](https://github.com/kurusugawa-computer/annofab-api-python-client)の3次元アノテーション用の拡張機能です。
 
 # Install
 
