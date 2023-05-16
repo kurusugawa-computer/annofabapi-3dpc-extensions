@@ -6,7 +6,7 @@ ifndef LINT_FILES
 	export LINT_FILES:=${MODULE}
 endif
 
-.PHONY: format lint test docs publish
+.PHONY: format lint test docs
 
 format:
 	poetry run autoflake  --in-place --remove-all-unused-imports  --ignore-init-module-imports --recursive ${FORMAT_FILES}
@@ -25,5 +25,3 @@ test:
 docs:
 	cd docs && poetry run make html
 
-publish:
-	poetry publish --build

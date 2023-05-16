@@ -116,17 +116,12 @@ ENV PIP_DEFAULT_TIMEOUT=100
 # poetry
 RUN set -x \
     && python -m pip install -U pip setuptools \
-    && pip install poetry \
+    && pip install "poetry<1.5" \
     && sudo -u vscode -i poetry config virtualenvs.in-project true
 
-
-# fix poetry issue (see: https://github.com/python-poetry/poetry/issues/221)
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends \
-        language-pack-en \
-    && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
-ENV LC_ALL=C.UTF-8
+ENV LANG ja_JP.UTF-8
+ENV LC_ALL ja_JP.UTF-8
+ENV LC_CTYPE ja_JP.UTF-8
 
 USER vscode
 
