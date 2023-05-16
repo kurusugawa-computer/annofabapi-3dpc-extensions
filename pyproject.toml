@@ -37,15 +37,14 @@ black = "^23"
 # lint library
 flake8 = "^6"
 mypy = "^1"
-pylint = "*"
+pylint = "^2"
 
 
 
 # document library
-sphinx = "*"
-docutils = "*"
+sphinx = "^7"
 # pandasのdocumentationページに近いレイアウトにするためのパッケージ
-pydata-sphinx-theme = "*"
+pydata-sphinx-theme = ">=0.13.3"
 
 
 

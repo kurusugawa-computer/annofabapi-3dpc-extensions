@@ -119,6 +119,10 @@ RUN set -x \
     && pip install "poetry<1.5" \
     && sudo -u vscode -i poetry config virtualenvs.in-project true
 
+ENV LANG ja_JP.UTF-8
+ENV LC_ALL ja_JP.UTF-8
+ENV LC_CTYPE ja_JP.UTF-8
+
 USER vscode
 
 ADD entrypoint.sh /entrypoint.sh
