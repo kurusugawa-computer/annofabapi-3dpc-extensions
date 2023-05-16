@@ -71,3 +71,8 @@ with parser.open_outer_file(Path(segment_annotation_data.data_uri).name) as f:
     # => [130439, 130442, ... ]
 
 ```
+
+
+# 開発者向けドキュメント
+
+https://github.com/kurusugawa-computer/annofabapi-3dpc-extensions/blob/main/README_for_developer.md 参照
