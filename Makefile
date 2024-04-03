@@ -1,26 +1,25 @@
-export MODULE:=annofab_3dpc
-ifndef FORMAT_FILES
-	export FORMAT_FILES:=${MODULE} tests
+ifndef SOURCE_FILES
+	export SOURCE_FILES:=annofab_3dpc
 endif
-ifndef LINT_FILES
-	export LINT_FILES:=${MODULE}
+ifndef TEST_FILES
+	export TEST_FILES:=tests
 endif
 
 .PHONY: format lint test docs
 
 format:
-	poetry run autoflake  --in-place --remove-all-unused-imports  --ignore-init-module-imports --recursive ${FORMAT_FILES}
-	poetry run isort ${FORMAT_FILES}
-	poetry run black ${FORMAT_FILES}
+	poetry run ruff format ${SOURCE_FILES} ${TEST_FILES}
+	poetry run ruff check ${SOURCE_FILES} ${TEST_FILES} --fix-only --exit-zero
 
 lint:
-	poetry run mypy ${LINT_FILES}
-	poetry run flake8 ${LINT_FILES}
-	poetry run pylint --jobs=0 ${LINT_FILES}
+	poetry run ruff check ${SOURCE_FILES}
+	poetry run mypy ${SOURCE_FILES}
+	poetry run pylint --jobs=0 ${SOURCE_FILES}
+
 
 test:
 	# 並列実行してレポートも出力する
-	poetry run pytest -n auto  --cov=${MODULE} --cov-report=html tests
+	poetry run pytest -n auto tests
 
 docs:
 	cd docs && poetry run make html

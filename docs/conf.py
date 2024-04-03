@@ -19,7 +19,7 @@
 
 project = "annofabapi-3dpc-extensions"
 copyright = "2021"
-author = "yuji38kwmt"
+author = "Kurusugawa Computer Inc."
 
 
 # -- General configuration ---------------------------------------------------

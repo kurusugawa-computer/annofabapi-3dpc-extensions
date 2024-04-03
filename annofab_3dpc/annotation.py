@@ -19,14 +19,14 @@ class Location(DataClassJsonMixin):
     y: float
     z: float
 
-    def __add__(self, other):
+    def __add__(self, other: "Location") -> "Location":
         return self.__class__(
             x=self.x + other.x,
             y=self.y + other.y,
             z=self.z + other.z,
         )
 
-    def __sub__(self, other):
+    def __sub__(self, other: "Location") -> "Location":
         return self.__class__(
             x=self.x - other.x,
             y=self.y - other.y,
@@ -51,10 +51,10 @@ class _Quaternion:
         https://github.com/KieranWynn/pyquaternion/blob/99025c17bab1c55265d61add13375433b35251af/pyquaternion/quaternion.py#L138
     """
 
-    def __init__(self, array: Union[Sequence[float], numpy.ndarray]):
+    def __init__(self, array: Union[Sequence[float], numpy.ndarray]) -> None:
         self.q = numpy.array(array)
 
-    def _q_matrix(self):
+    def _q_matrix(self) -> numpy.ndarray:
         """Matrix representation of quaternion for multiplication purposes."""
         return numpy.array(
             [
@@ -65,7 +65,7 @@ class _Quaternion:
             ]
         )
 
-    def _q_bar_matrix(self):
+    def _q_bar_matrix(self) -> numpy.ndarray:
         """Matrix representation of quaternion for multiplication purposes."""
         return numpy.array(
             [
@@ -77,13 +77,13 @@ class _Quaternion:
         )
 
     @property
-    def rotation_matrix(self):
+    def rotation_matrix(self) -> numpy.ndarray:
         """Get the 3x3 rotation matrix equivalent of the quaternion rotation.
         Returns:
             A 3x3 orthogonal rotation matrix as a 3x3 Numpy array
         Note:
-            This feature only makes sense when referring to a unit quaternion. Calling this method will implicitly normalise the Quaternion object to a unit quaternion if it is not already one.  # noqa: E501
-        """
+            This feature only makes sense when referring to a unit quaternion. Calling this method will implicitly normalise the Quaternion object to a unit quaternion if it is not already one.
+        """  # noqa: E501
         product_matrix = numpy.dot(self._q_matrix(), self._q_bar_matrix().conj().transpose())
         return product_matrix[1:][:, 1:]
 
@@ -298,7 +298,7 @@ class CuboidAnnotationDetailDataV1(DataClassJsonMixin):
         return {"data": str_data, "_type": ANNOTATION_TYPE_UNKNOWN}
 
 
-def convert_annotation_detail_data(dict_data: Dict[str, Any]) -> Any:
+def convert_annotation_detail_data(dict_data: Dict[str, Any]) -> Any:  # noqa: ANN401
     """
     SimpleAnnotationDetailクラスのdict型であるdataプロパティを、3DPC Editor用のDataclassに変換します。
     3DPC Editor用のDataclassに変換できない場合は、引数をそのまま返します。

@@ -1,17 +1,26 @@
 dist: focal
 language: python
-python:
-  - "3.8"
-  - "3.9"
-  - "3.10"
+script:
+   - make test
+
+
+jobs:
+  include:
+    - python: 3.8
+    - python: 3.9
+    - python: 3.10
+    - python: 3.11
+      script:
+        - make test
+        # 開発環境と同じバージョンではlintを実行する
+        - make lint
+    - python: 3.12
+
 install:
   # pipをアップグレードする理由: pipのバージョンが古いと、pillowなど環境ごとにwheelを提供しているライブラリのインストールに失敗する可能性があるため
   - pip install pip --upgrade
-  - pip install "poetry<1.5"
+  - pip install "poetry<1.9"
   - travis_retry poetry install
-script:
-   - make lint
-   - make test
 branches:
   only:
   - main
