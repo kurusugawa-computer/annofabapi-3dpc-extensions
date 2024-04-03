@@ -16,7 +16,7 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8.1"
+python = "^3.8"
 dataclasses-json="*"
 
 # Pythonバージョンでnumpyのバージョンを変えている理由
