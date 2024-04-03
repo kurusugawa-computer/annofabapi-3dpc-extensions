@@ -118,7 +118,7 @@ class TestAnnotation:
     def test_convert_annotation_detail_data_with_other(self):
         detail = self.details[3]
         result = convert_annotation_detail_data(detail["data"])
-        assert type(result) == dict
+        assert type(result) == dict  # noqa: E721
 
     def test_raise_CuboidAnnotationDecodEerror(self):
         with (data_dir / "invalid_simple_annotation.json").open() as f:
@@ -149,4 +149,4 @@ def test_convert_annotation_detail_data():
     assert type(result.details[0].data) == SegmentAnnotationDetailData
     assert type(result.details[1].data) == CuboidAnnotationDetailDataV2
     assert type(result.details[2].data) == CuboidAnnotationDetailDataV1
-    assert type(result.details[3].data) == dict
+    assert type(result.details[3].data) == dict  # noqa: E721
