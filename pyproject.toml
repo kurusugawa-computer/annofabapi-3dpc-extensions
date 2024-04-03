@@ -18,33 +18,37 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.8.1"
 dataclasses-json="*"
-numpy = "*"
 
-[tool.poetry.dev-dependencies]
+# Pythonバージョンでnumpyのバージョンを変えている理由
+# https://qiita.com/yuji38kwmt/items/7ce857bb8698536bfa36
+numpy = [
+  {version = ">=1.26", python = ">=3.9"},
+  {version = "<1.25", python = "=3.8"}
+]
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7"
+pytest-xdist = "*"
+pytest-cov = "*"
 # テストコードで利用するため
 annofabapi = ">=0.47.0"
 
-# test library
-pytest = "*"
-pytest-xdist = "*"
-pytest-cov = "*"
 
-# format library
-isort = "^5"
-autoflake = "*"
-black = "^23"
-
-# lint library
-flake8 = "^6"
-mypy = "^1"
-pylint = "^2"
+[tool.poetry.group.linter.dependencies]
+# pythonバージョンを指定している理由：Python3.11（開発環境）でしかlintを実行していないため
+ruff = {version="^0.2", python=">=3.11"}
+mypy = {version="^1", python=">=3.11"}
+pylint = {version="^3", python=">=3.11"}
 
 
+[tool.poetry.group.documentation.dependencies]
+# ドキュメント生成用のライブラリ
+# `python=">=3.11"`を指定している理由：Pytyhon3.11を利用している開発環境かReadTheDocsでしかドキュメントを生成しないため
+sphinx = {version="^7", python=">=3.11"}
+pydata-sphinx-theme = {version=">=0.13", python=">=3.11"}
 
-# document library
-sphinx = "^7"
-# pandasのdocumentationページに近いレイアウトにするためのパッケージ
-pydata-sphinx-theme = ">=0.13.3"
+
 
 
 
