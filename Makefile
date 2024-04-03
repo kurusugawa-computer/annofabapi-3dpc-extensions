@@ -19,7 +19,7 @@ lint:
 
 test:
 	# 並列実行してレポートも出力する
-	poetry run pytest -n auto  --cov=${MODULE} --cov-report=html tests
+	poetry run pytest -n auto tests
 
 docs:
 	cd docs && poetry run make html

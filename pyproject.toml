@@ -30,7 +30,6 @@ numpy = [
 [tool.poetry.group.test.dependencies]
 pytest = "^7"
 pytest-xdist = "*"
-pytest-cov = "*"
 # テストコードで利用するため
 annofabapi = ">=0.47.0"
 
