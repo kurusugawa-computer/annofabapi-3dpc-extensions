@@ -77,7 +77,7 @@ ignore = [
     "FIX", # TODOやFIXMEを使うため無視する
     "TD", # TODOコメントの書き方に気にしていないので無視する
 
-    # 以下のルールはannofabcliのコードに合っていないので無効化した
+    # 以下のルールはプロジェクトのコードに合っていないので無効化した
     "RSE", # flake8-raise
     "D", # pydocstyle, Docstringを中途半端にしか書いていないので、除外する
     "C90", # mccabe

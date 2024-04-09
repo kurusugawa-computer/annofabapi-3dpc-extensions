@@ -19,14 +19,14 @@
 	"forwardPorts": [],
 	"runArgs": [
 		"--init",
-		"--net=host",
+		"--net=host"
 	],
 	"containerEnv": {
 		"CONTAINER_WORKSPACE": "${containerWorkspaceFolder}",
 		"LOCAL_WORKSPACE": "${localWorkspaceFolder}"
 	},
-	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/annofab-cli,type=bind,consistency=cached",
-	"workspaceFolder": "/workspaces/annofab-cli",
+	"workspaceMount": "source=${localWorkspaceFolder},target=/workspaces,type=bind,consistency=cached",
+	"workspaceFolder": "/workspaces",
 	"postStartCommand": "poetry install",
 	"customizations": {
 		"vscode": {
