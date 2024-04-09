@@ -28,7 +28,7 @@ numpy = [
 
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7"
+pytest = ">=7,<9"
 pytest-xdist = "*"
 # テストコードで利用するため
 annofabapi = ">=0.47.0"
