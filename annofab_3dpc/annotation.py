@@ -2,7 +2,7 @@ import json
 import math
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Optional, Union
 
 import numpy
 from dataclasses_json import DataClassJsonMixin
