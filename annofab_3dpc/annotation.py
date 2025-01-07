@@ -103,7 +103,7 @@ class EulerAnglesZXY(DataClassJsonMixin):
     z: float
     """Z軸周りの回転角度[ラジアン]"""
 
-    def to_quaternion(self) -> List[float]:
+    def to_quaternion(self) -> list[float]:
         """
         クォータニオンを生成する。
 
@@ -241,7 +241,7 @@ class CuboidAnnotationDetailDataV2(DataClassJsonMixin):
     kind: str = "CUBOID"
     version: str = "2"
 
-    def dump(self) -> Dict[str, Any]:
+    def dump(self) -> dict[str, Any]:
         """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
         str_data = json.dumps(self.to_dict(), separators=(",", ":"))
         return {"data": str_data, "_type": ANNOTATION_TYPE_UNKNOWN}
@@ -249,7 +249,7 @@ class CuboidAnnotationDetailDataV2(DataClassJsonMixin):
 
 @dataclass
 class SegmentData(DataClassJsonMixin):
-    points: List[int]
+    points: list[int]
     """セグメントに含まれる点の集合。数値はアノテーション対象の点群の、0-originでのindex"""
     kind: str = "SEGMENT"
     version: str = "1"
@@ -260,7 +260,7 @@ class SegmentAnnotationDetailData(DataClassJsonMixin):
     data_uri: str
     """セグメント情報が格納されたファイルのパス"""
 
-    def dump(self) -> Dict[str, Any]:
+    def dump(self) -> dict[str, Any]:
         """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
         return {"data": self.data_uri, "_type": ANNOTATION_TYPE_UNKNOWN}
 
@@ -293,13 +293,13 @@ class CuboidAnnotationDetailDataV1(DataClassJsonMixin):
     kind: str = "CUBOID"
     version: str = "1"
 
-    def dump(self) -> Dict[str, Any]:
+    def dump(self) -> dict[str, Any]:
         """SimpleAnnotationDetailクラスのdataプロパティに対応するdictを生成する。"""
         str_data = json.dumps(self.to_dict(), separators=(",", ":"))
         return {"data": str_data, "_type": ANNOTATION_TYPE_UNKNOWN}
 
 
-def convert_annotation_detail_data(dict_data: Dict[str, Any]) -> Any:  # noqa: ANN401
+def convert_annotation_detail_data(dict_data: dict[str, Any]) -> Any:  # noqa: ANN401
     """
     SimpleAnnotationDetailクラスのdict型であるdataプロパティを、3DPC Editor用のDataclassに変換します。
     3DPC Editor用のDataclassに変換できない場合は、引数をそのまま返します。
