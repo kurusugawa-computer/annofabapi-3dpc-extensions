@@ -16,19 +16,13 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 dataclasses-json="*"
-
-# Pythonバージョンでnumpyのバージョンを変えている理由
-# https://qiita.com/yuji38kwmt/items/7ce857bb8698536bfa36
-numpy = [
-  {version = ">=1.26", python = ">=3.9"},
-  {version = "<1.25", python = "=3.8"}
-]
+numpy = "*"
 
 
 [tool.poetry.group.test.dependencies]
-pytest = "^7"
+pytest = "^8"
 pytest-xdist = "*"
 # テストコードで利用するため
 annofabapi = ">=0.47.0"
@@ -36,7 +30,7 @@ annofabapi = ">=0.47.0"
 
 [tool.poetry.group.linter.dependencies]
 # pythonバージョンを指定している理由：Python3.11（開発環境）でしかlintを実行していないため
-ruff = {version="^0.2", python=">=3.11"}
+ruff = {version="^0.8", python=">=3.11"}
 mypy = {version="^1", python=">=3.11"}
 pylint = {version="^3", python=">=3.11"}
 
@@ -44,8 +38,13 @@ pylint = {version="^3", python=">=3.11"}
 [tool.poetry.group.documentation.dependencies]
 # ドキュメント生成用のライブラリ
 # `python=">=3.11"`を指定している理由：Pytyhon3.11を利用している開発環境かReadTheDocsでしかドキュメントを生成しないため
-sphinx = {version="^7", python=">=3.11"}
+sphinx = {version="^8", python=">=3.11"}
 pydata-sphinx-theme = {version=">=0.13", python=">=3.11"}
+
+
+[tool.poetry.group.dev-only.dependencies]
+# wheelファイルをビルドすると時間がかかるため、python3.13のwheelファイルが存在するバージョンを明示する
+numpy = {version = ">=2.1", python = ">=3.13"}
 
 
 [tool.mypy]
@@ -56,7 +55,7 @@ check_untyped_defs = true
 plugins = "numpy.typing.mypy_plugin"
 
 [tool.ruff]
-target-version = "py38"
+target-version = "py39"
 line-length = 120
 
 
@@ -70,8 +69,6 @@ ignore = [
     "RUF003",# 全角記号など`ambiguous unicode character`も使いたいため
     "PLC1901", # compare-to-empty-string : `if a == "`のように空文字列で直接比較したいときがあるため
     "PLR2004", # magic-value-comparison: listのサイズで判定するときがよくあるため
-    "ANN101", # missing-type-self: 引数selfには型ヒントは付けていないため
-    "ANN102", # missing-type-cls: 引数clsには型ヒントは付けていないため
     "ERA", # : 役立つこともあるが、コメントアウトしていないコードも警告されるので無視する
     "PERF203", # try-except-in-loop: ループ内でtry-exceptを使うこともあるため無視する。
     "FIX", # TODOやFIXMEを使うため無視する
@@ -108,8 +105,9 @@ select = [
 convention = "google"
 
 [tool.ruff.lint.pyupgrade]
-# Python3.8をサポートしているため、`typing.List`などの型ヒントは警告しないようにする
+# `typing.Optional`を使っているため、UP007のルールを無視する
 # https://beta.ruff.rs/docs/settings/#keep-runtime-typing
+# Python 3.9のサポートを終了したら、この設定を除去する
 keep-runtime-typing = true
 
 [tool.ruff.lint.pylint]
@@ -117,7 +115,6 @@ max-args = 10
 
 [tool.poetry-dynamic-versioning]
 enable = true
-format = "{base}"
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
