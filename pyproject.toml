@@ -27,6 +27,7 @@ test = [
     "annofabapi>=0.47.0",
 ]
 linter = [
+    "pre-commit>=4.7.0",
     "ruff>=0.17.2",
     "mypy>=2.4.0",
 ]

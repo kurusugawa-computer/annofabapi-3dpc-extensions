@@ -1,0 +1,4 @@
+title = "annofabapi-3dpc-extensions gitleaks config"
+
+[extend]
+useDefault = true
