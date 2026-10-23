@@ -11,9 +11,9 @@ GitHubのReleasesからリリースしてください。バージョンはSemant
 
 # 開発環境
 
-uv 0.13.4 以上と Python 3.11 以上を利用してください。
+uv 0.13.4 以上と Python 3.12+を利用してください。
 
 ```sh
-uv sync --locked --python 3.11
+uv sync --locked --python 3.12
 make lint
 ```

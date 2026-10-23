@@ -2,7 +2,7 @@ import json
 import math
 from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Any, Optional, Union
+from typing import Any
 
 import numpy
 from dataclasses_json import DataClassJsonMixin
@@ -52,7 +52,7 @@ class _Quaternion:
         https://github.com/KieranWynn/pyquaternion/blob/99025c17bab1c55265d61add13375433b35251af/pyquaternion/quaternion.py#L138
     """
 
-    def __init__(self, array: Union[Sequence[float], numpy.ndarray]) -> None:
+    def __init__(self, array: Sequence[float] | numpy.ndarray) -> None:
         self.q = numpy.array(array)
 
     def _q_matrix(self) -> numpy.ndarray:
@@ -135,7 +135,7 @@ class EulerAnglesZXY(DataClassJsonMixin):
         return [qw, qx, qy, qz]
 
     @classmethod
-    def from_quaternion(cls, quaternion: Union[Sequence[float], numpy.ndarray]) -> "EulerAnglesZXY":
+    def from_quaternion(cls, quaternion: Sequence[float] | numpy.ndarray) -> "EulerAnglesZXY":
         """
         quaternion から生成する。以下のコードを移植した。
         https://github.com/BabylonJS/Babylon.js/blob/40ded9ccf1e1bd8ac9cdf3a26909d3e12bc60ab8/src/Maths/math.vector.ts#L2970-L3001
@@ -205,7 +205,7 @@ class CuboidDirection(DataClassJsonMixin):
         return cls.from_quaternion(euler_angles.to_quaternion())
 
     @classmethod
-    def from_quaternion(cls, quaternion: Union[Sequence[float], numpy.ndarray]) -> "CuboidDirection":
+    def from_quaternion(cls, quaternion: Sequence[float] | numpy.ndarray) -> "CuboidDirection":
         """
         quaternion から生成する。
 
@@ -283,7 +283,7 @@ class CuboidShapeV1(DataClassJsonMixin):
     """cuboidの中心位置"""
     rotation: EulerAnglesZXY
     """cuboidの回転"""
-    direction: Optional[Vector3] = None
+    direction: Vector3 | None = None
     """[1, 0, 0]のベクトルを、rotationによって回転させた結果のベクトル"""
 
 

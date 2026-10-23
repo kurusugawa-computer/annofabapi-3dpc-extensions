@@ -1,5 +1,5 @@
 # annofabapi-3dpc-extensions
-[![Build Status](https://app.travis-ci.com/kurusugawa-computer/annofabapi-3dpc-extensions.svg?branch=main)](https://app.travis-ci.com/kurusugawa-computer/annofabapi-3dpc-extensions)
+[![Build Status](https://github.com/kurusugawa-computer/annofabapi-3dpc-extensions/actions/workflows/lint-test.yml/badge.svg)](https://github.com/kurusugawa-computer/annofabapi-3dpc-extensions/actions)
 [![PyPI version](https://badge.fury.io/py/annofabapi-3dpc-extensions.svg)](https://badge.fury.io/py/annofabapi-3dpc-extensions)
 [![Python Versions](https://img.shields.io/pypi/pyversions/annofabapi-3dpc-extensions.svg)](https://pypi.org/project/annofabapi-3dpc-extensions/)
 [![Documentation Status](https://readthedocs.org/projects/annofabapi-3dpc-extensions/badge/?version=latest)](https://annofabapi-3dpc-extensions.readthedocs.io/en/latest/?badge=latest)
@@ -10,7 +10,7 @@
 
 # Install
 
-* Python 3.9+
+* Python 3.12+
 
 # Install
 
