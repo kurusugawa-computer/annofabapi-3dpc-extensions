@@ -13,7 +13,7 @@ Repository = "https://github.com/kurusugawa-computer/annofabapi-3dpc-extensions"
 
 [dependency-groups]
 test = ["pytest>=8,<9", "pytest-xdist", "annofabapi>=0.47.0"]
-linter = ["ruff>=0.8,<0.9", "mypy>=1,<2", "pylint>=3,<4"]
+linter = ["ruff>=0.8,<0.18", "mypy>=1,<2", "pylint>=3,<4"]
 documentation = ["sphinx>=8,<9", "pydata-sphinx-theme>=0.13"]
 dev-only = ["numpy>=2.1; python_version >= '3.13'"]
 
