@@ -8,19 +8,19 @@ endif
 .PHONY: format lint test docs
 
 format:
-	poetry run ruff format ${SOURCE_FILES} ${TEST_FILES}
-	poetry run ruff check ${SOURCE_FILES} ${TEST_FILES} --fix-only --exit-zero
+	uv run ruff format ${SOURCE_FILES} ${TEST_FILES}
+	uv run ruff check ${SOURCE_FILES} ${TEST_FILES} --fix-only --exit-zero
 
 lint:
-	poetry run ruff check ${SOURCE_FILES}
-	poetry run mypy ${SOURCE_FILES}
-	poetry run pylint --jobs=0 ${SOURCE_FILES}
+	uv run ruff check ${SOURCE_FILES}
+	uv run mypy ${SOURCE_FILES}
+	uv run pylint --jobs=0 ${SOURCE_FILES}
 
 
 test:
 	# 並列実行してレポートも出力する
-	poetry run pytest -n auto tests
+	uv run pytest -n auto tests
 
 docs:
-	cd docs && poetry run make html
+	cd docs && uv run make html
 

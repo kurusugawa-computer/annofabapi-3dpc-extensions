@@ -20,29 +20,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: astral-sh/setup-uv@v7
         with:
           python-version: ${{ matrix.python-version }}
+          version: "latest"
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip "poetry<1.9"
-          poetry install --only main,test
+        run: uv sync --locked --no-default-groups --group test
       - name: Test
         run: |
-            make test
+            uv run --locked --no-default-groups --group test pytest -n auto tests
           
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python 3.11
-        uses: actions/setup-python@v5
+        uses: astral-sh/setup-uv@v7
         with:
-            python-version: 3.11
+          python-version: "3.11"
+          version: "latest"
       - name: Install dependencies
-        run: |
-            python -m pip install --upgrade pip "poetry<1.9"
-            poetry install --only main,linter
+        run: uv sync --locked --no-default-groups --group linter
       - name: Lint
         run: |
             make lint

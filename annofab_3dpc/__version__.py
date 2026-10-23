@@ -1,1 +1,3 @@
-__version__ = "0.0.0"  # `poetry-dynamic-versioning`を使ってGitHubのバージョンタグを取得している。変更不要
+from importlib.metadata import version
+
+__version__ = version("annofabapi-3dpc-extensions")
