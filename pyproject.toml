@@ -101,3 +101,6 @@ source = "uv-dynamic-versioning"
 
 [tool.hatch.build.targets.wheel]
 packages = ["annofab_3dpc"]
+
+[tool.uv-dynamic-versioning]
+fallback-version = "0.0.0"
