@@ -14,7 +14,6 @@ format:
 lint:
 	uv run ruff check ${SOURCE_FILES}
 	uv run mypy ${SOURCE_FILES}
-	uv run pylint ${SOURCE_FILES}
 
 
 test:

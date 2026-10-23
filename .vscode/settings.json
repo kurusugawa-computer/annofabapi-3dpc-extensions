@@ -22,14 +22,6 @@
 
     "python.linting.enabled": true,
     "python.linting.lintOnSave": true,
-    "python.linting.pylintEnabled": true,
-    "python.linting.pylintPath": ".venv/bin/pylint",
-    "python.linting.pylintArgs": [
-        "--rcfile setup.cfg",
-    ],
-    "python.linting.flake8Enabled": true,
-    "python.linting.flake8Path": ".venv/bin/flake8",
-    "python.linting.flake8Args": [],
     "python.linting.mypyEnabled": true,
     "python.linting.mypyPath": ".venv/bin/mypy",
     "python.linting.mypyArgs": [],
@@ -48,6 +40,7 @@
     ],
     "python.analysis.completeFunctionParens": true,
     "[python]": {
+        "editor.defaultFormatter": "charliermarsh.ruff",
         "editor.formatOnSave": false,
     },
     "python.testing.autoTestDiscoverOnSaveEnabled": false,
