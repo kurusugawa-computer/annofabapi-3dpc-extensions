@@ -17,3 +17,5 @@ uv 0.13.4 以上と Python 3.12+を利用してください。
 uv sync --locked --python 3.12
 make lint
 ```
+
+lint・整形には Ruff、型検査には mypy を利用します。`make format` で整形し、`make lint` でチェックしてください。
